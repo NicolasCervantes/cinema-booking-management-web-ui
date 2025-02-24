@@ -1,71 +1,80 @@
-# Movie Reservation App
+# Frontend - Movie Reservation App
 
-This project is a movie reservation application built with React and TypeScript. It allows users to view a list of movies and theaters, select a movie, theater, and time, reserve seats with a seat map, and view existing reservations.
+## Descripción
 
-## Features
+Este es el frontend de la aplicación de reserva de películas. Proporciona una interfaz de usuario para gestionar películas, teatros, showtimes, asientos y reservas.
 
-- View a list of movies and theaters
-- Select a movie and theater
-- Choose a showtime and reserve seats
-- Interactive seat map for seat selection
-- View existing reservations
+## Funciones
 
-## Project Structure
+Este frontend permite:
 
-```
-movie-reservation-app
+Ver la lista de películas disponibles.
+Seleccionar una película y ver los teatros que la proyectan.
+Seleccionar un teatro y ver los horarios de función (showtimes) disponibles.
+Seleccionar un horario de función (showtime) y ver los asientos disponibles.
+Realizar una reserva de asientos para un horario de función (showtime) específico.
+
+## Requisitos
+
+- Node.js (v14 o superior)
+- npm (v6 o superior)
+
+## Estructura del proyecto
+
+```plaintext
+frontend
 ├── public
-│   ├── index.html          # Main HTML file for the React application
-│   └── manifest.json       # Metadata for Progressive Web App features
+│   ├── index.html          # Archivo HTML principal para la aplicación React
+│   └── manifest.json       # Metadata para características de Progressive Web App
 ├── src
-│   ├── components          # Reusable components
-│   │   ├── MovieList.tsx   # Component to display a list of movies
-│   │   ├── TheaterList.tsx  # Component to display a list of theaters
-│   │   ├── SeatMap.tsx      # Component for seat selection
-│   │   ├── ReservationForm.tsx # Component for making reservations
-│   │   └── ReservationList.tsx # Component to view existing reservations
-│   ├── pages               # Page components
-│   │   ├── HomePage.tsx    # Landing page of the application
-│   │   ├── MoviePage.tsx   # Page for selected movie details
-│   │   ├── TheaterPage.tsx  # Page for selected theater details
-│   │   ├── SeatSelectionPage.tsx # Page for seat selection
-│   │   └── ReservationPage.tsx # Page to view existing reservations
-│   ├── services            # API service files
-│   │   ├── api.ts          # Functions for making API calls
-│   │   └── reservationService.ts # Functions for reservation-related API calls
-│   ├── App.tsx             # Main application component
-│   ├── index.tsx           # Entry point for the React application
-│   └── types               # TypeScript types and interfaces
+│   ├── components          # Componentes reutilizables
+│   │   ├── MovieList.tsx   # Componente para mostrar una lista de películas
+│   │   ├── TheaterList.tsx # Componente para mostrar una lista de teatros
+│   │   ├── SeatMap.tsx     # Componente para la selección de asientos
+│   │   ├── ReservationForm.tsx # Componente para hacer reservas
+│   │   └── ReservationList.tsx # Componente para ver reservas existentes
+│   ├── pages               # Componentes de página
+│   │   ├── HomePage.tsx    # Página de inicio de la aplicación
+│   │   ├── MoviePage.tsx   # Página de detalles de la película seleccionada
+│   │   ├── TheaterPage.tsx # Página de detalles del teatro seleccionado
+│   │   ├── SeatSelectionPage.tsx # Página para la selección de asientos
+│   │   └── ReservationPage.tsx # Página para ver reservas existentes
+│   ├── services            # Archivos de servicio de API
+│   │   ├── api.ts          # Funciones para hacer llamadas a la API
+│   │   └── reservationService.ts # Funciones para llamadas a la API relacionadas con reservas
+│   ├── App.tsx             # Componente principal de la aplicación
+│   ├── index.tsx           # Punto de entrada para la aplicación React
+│   └── types               # Tipos e interfaces de TypeScript
 │       └── index.ts
-├── package.json            # npm configuration file
-├── tsconfig.json           # TypeScript configuration file
-└── README.md               # Project documentation
+├── .env                    # Archivo de configuración de variables de entorno
+├── package.json            # Archivo de configuración de npm
+├── tsconfig.json           # Archivo de configuración de TypeScript
+└── README.md               # Documentación del proyecto
 ```
 
 ## Getting Started
 
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd movie-reservation-app
+1. Clona el repositorio:
+   ```sh
+   git clone <URL_DEL_REPOSITORIO_FRONTEND>
+   cd frontend
    ```
 
-2. Install dependencies:
+2. Instala las dependencias:
    ```
    npm install
    ```
 
-3. Start the development server:
+3. Configura las variables de entorno, crea o modifica el archivo constants.tsx para añadir la siguiente variable:
+   ```
+   API_BASE_URL=http://localhost:3000/api
+   ```
+
+4. Ejecuta la aplicación:
    ```
    npm start
    ```
+   Se debe tener en cuenta que el puerto debe ser diferente del usado al puerto del backend, para no impedir el funcionamiento del flujo.
 
-4. Open your browser and navigate to `http://localhost:3000` to view the application.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
-
-## License
-
-This project is licensed under the MIT License.
+   Ejemplo:
+   http://localhost:3001/api
