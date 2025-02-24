@@ -12,10 +12,20 @@ export const fetchTheaters = async (): Promise<Theater[]> => {
   return response.data;
 };
 
+export const fetchTheatersByMovie = async (movieId: string): Promise<Theater[]> => {
+  const response = await axios.get(`${API_BASE_URL}/theaters/by-movie/${movieId}`);
+  return response.data;
+};
+
 export const fetchShowtimes = async (movieId: string, theaterId: string): Promise<Showtime[]> => {
   const response = await axios.get(`${API_BASE_URL}/showtimes`, {
     params: { movieId, theaterId },
   });
+  return response.data;
+};
+
+export const fetchShowtimesByTheaterAndMovie = async (theaterId: string, movieId: string): Promise<Showtime[]> => {
+  const response = await axios.get(`${API_BASE_URL}/showtimes/by-theater-and-movie/${theaterId}/${movieId}`);
   return response.data;
 };
 
@@ -33,5 +43,11 @@ export const createReservation = async (reservation: { name: string; email: stri
 
 export const fetchReservations = async (): Promise<Reservation[]> => {
   const response = await axios.get(`${API_BASE_URL}/reservations`);
+  return response.data;
+};
+
+// Método para obtener reservas por showtime
+export const fetchReservationsByShowtime = async (showtimeId: string): Promise<Reservation[]> => {
+  const response = await axios.get(`${API_BASE_URL}/report/by-showtime/${showtimeId}`);
   return response.data;
 };
