@@ -1,0 +1,9 @@
+.confirmation-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  text-align: center;
+  margin: 50px auto;
+  width: 50%;
+}

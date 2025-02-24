@@ -1,46 +1,54 @@
 import React, { useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import ReservationForm from '../components/ReservationForm';
-import ReservationList from '../components/ReservationList';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { createReservation } from '../services/api';
+import { FaChair } from 'react-icons/fa'; // Importar el ícono de silla
+import './ReservationPage.css'; // Importar el archivo CSS
 
 const ReservationPage: React.FC = () => {
-  const { showtimeId } = useParams<{ showtimeId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const showtimeId = params.get('showtimeId');
+  const seats = params.get('seats')?.split(',') || [];
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const selectedSeats = location.state?.selectedSeats || [];
+  const [reservationComplete, setReservationComplete] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Aquí puedes agregar la lógica para guardar la reserva en la base de datos
-    navigate('/congrats');
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await createReservation({ name, email, seats });
+      navigate('/confirmation'); // Redirigir a una página de confirmación
+    } catch (error) {
+      console.error('Error creating reservation:', error);
+      alert('Failed to create reservation');
+    }
   };
 
   return (
     <div>
-      <h1>Reservations</h1>
-      <ReservationForm onReserve={(selectedSeats) => console.log('Reserved seats:', selectedSeats)} />
-      <ReservationList />
-      <h2>Enter Your Details</h2>
+      <h2>Create a Reservation</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
-        </label>
+        <div>
+          <label>Name:</label>
+          <input type="text" value={name} onChange={e => setName(e.target.value)} required />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+        </div>
         <div>
           <h3>Selected Seats</h3>
-          <ul>
-            {selectedSeats.map((seatId: number) => (
-              <li key={seatId}>{seatId}</li>
+          <div className="seats-container">
+            {seats.map(seat => (
+              <div key={seat} className="seat-icon-container">
+                <FaChair className="seat-icon" />
+                <span className="seat-number">{seat}</span>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Create Reservation</button>
       </form>
     </div>
   );

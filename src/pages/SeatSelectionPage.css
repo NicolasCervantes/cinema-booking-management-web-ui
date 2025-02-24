@@ -1,0 +1,28 @@
+.seats-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.seat-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seat-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: gray;
+}
+
+.seat-icon.selected {
+  color: green;
+}
+
+.seat-number {
+  position: absolute;
+  font-size: 16px; /* Aumentar el tamaño del número */
+  color: black; /* Cambiar el color del número a negro */
+}

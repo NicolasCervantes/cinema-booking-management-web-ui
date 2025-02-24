@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchSeats } from '../services/api';
 import { Seat } from '../types';
+import { FaChair } from 'react-icons/fa'; // Importar el ícono de silla
+import './SeatSelectionPage.css'; // Importar el archivo CSS
 
 const SeatSelectionPage: React.FC = () => {
-  const { showtimeId } = useParams<{ showtimeId: string }>();
-  const [seats, setSeats] = useState<Seat[]>([]);
-  const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+  const location = useLocation();
   const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const showtimeId = params.get('showtimeId');
+  const [seats, setSeats] = useState<Seat[]>([]);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
 
   useEffect(() => {
     if (showtimeId) {
@@ -17,7 +21,7 @@ const SeatSelectionPage: React.FC = () => {
     }
   }, [showtimeId]);
 
-  const handleSeatClick = (seatId: number) => {
+  const handleSeatSelect = (seatId: string) => {
     setSelectedSeats(prevSelectedSeats =>
       prevSelectedSeats.includes(seatId)
         ? prevSelectedSeats.filter(id => id !== seatId)
@@ -25,26 +29,22 @@ const SeatSelectionPage: React.FC = () => {
     );
   };
 
-  const handleProceedToReservation = () => {
-    navigate(`/reservation/${showtimeId}`, { state: { selectedSeats } });
+  const handleNext = () => {
+    navigate(`/reservations/create?showtimeId=${showtimeId}&seats=${selectedSeats.join(',')}`);
   };
 
   return (
     <div>
       <h2>Select Seats</h2>
-      <div className="seat-map">
+      <div className="seats-container">
         {seats.map(seat => (
-          <button
-            key={seat.id}
-            className={selectedSeats.includes(seat.id) ? 'selected' : ''}
-            onClick={() => handleSeatClick(seat.id)}
-            disabled={!seat.isAvailable}
-          >
-            {seat.number}
-          </button>
+          <div key={seat.id} className="seat-icon-container" onClick={() => handleSeatSelect(seat.id.toString())}>
+            <FaChair className={`seat-icon ${selectedSeats.includes(seat.id.toString()) ? 'selected' : ''}`} />
+            <span className="seat-number">{seat.number}</span>
+          </div>
         ))}
       </div>
-      <button onClick={handleProceedToReservation}>Proceed to Reservation</button>
+      <button onClick={handleNext}>Next</button>
     </div>
   );
 };

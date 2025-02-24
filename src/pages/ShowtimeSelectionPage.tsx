@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchShowtimes } from '../services/api';
 import { Showtime } from '../types';
 
 const ShowtimeSelectionPage: React.FC = () => {
   const { movieId, theaterId } = useParams<{ movieId: string; theaterId: string }>();
   const [showtimes, setShowtimes] = useState<Showtime[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (movieId && theaterId) {
@@ -15,6 +16,10 @@ const ShowtimeSelectionPage: React.FC = () => {
     }
   }, [movieId, theaterId]);
 
+  const handleSelectShowtime = (showtimeId: string) => {
+    navigate(`/seats?showtimeId=${showtimeId}`);
+  };
+
   return (
     <div>
       <h2>Select a Showtime</h2>
@@ -22,6 +27,7 @@ const ShowtimeSelectionPage: React.FC = () => {
         {showtimes.map(showtime => (
           <li key={showtime.id}>
             {new Date(showtime.startTime).toLocaleString()}
+            <button onClick={() => handleSelectShowtime(showtime.id.toString())}>Select</button>
           </li>
         ))}
       </ul>

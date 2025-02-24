@@ -4,7 +4,6 @@ import { Movie, Theater, Showtime, Seat, Reservation } from '../types';
 
 export const fetchMovies = async (): Promise<Movie[]> => {
   const response = await axios.get(`${API_BASE_URL}/movies`);
-  console.log('API response:', response.data); // Agregar depuración
   return response.data;
 };
 

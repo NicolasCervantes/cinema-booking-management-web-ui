@@ -6,7 +6,7 @@ import TheaterSelectionPage from './pages/TheaterSelectionPage';
 import ShowtimeSelectionPage from './pages/ShowtimeSelectionPage';
 import SeatSelectionPage from './pages/SeatSelectionPage';
 import ReservationPage from './pages/ReservationPage';
-import CongratsPage from './pages/CongratsPage';
+import ConfirmationPage from './pages/ConfirmationPage';
 
 const App: React.FC = () => {
   return (
@@ -16,9 +16,9 @@ const App: React.FC = () => {
         <Route path="/movies" element={<MovieSelectionPage />} />
         <Route path="/theaters/:movieId" element={<TheaterSelectionPage />} />
         <Route path="/showtimes/:movieId/:theaterId" element={<ShowtimeSelectionPage />} />
-        <Route path="/seats/:showtimeId" element={<SeatSelectionPage />} />
-        <Route path="/reservation/:showtimeId" element={<ReservationPage />} />
-        <Route path="/congrats" element={<CongratsPage />} />
+        <Route path="/seats" element={<SeatSelectionPage />} />
+        <Route path="/reservations/create" element={<ReservationPage />} />
+        <Route path="/confirmation" element={<ConfirmationPage />} />
       </Routes>
     </Router>
   );

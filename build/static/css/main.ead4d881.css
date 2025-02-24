@@ -1,0 +1,2 @@
+.seat-icon{cursor:pointer}.seat-icon.selected{color:green}.seats-container{display:flex;flex-wrap:wrap;gap:10px}.seat-icon-container{align-items:center;display:flex;justify-content:center;position:relative}.seat-icon{color:gray;font-size:24px}.seat-number{color:#000;font-size:16px;position:absolute}.confirmation-box{background-color:#f9f9f9;border:1px solid #ccc;border-radius:5px;margin:50px auto;padding:20px;text-align:center;width:50%}
+/*# sourceMappingURL=main.ead4d881.css.map*/
