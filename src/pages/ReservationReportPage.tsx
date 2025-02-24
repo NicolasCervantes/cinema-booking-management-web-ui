@@ -7,7 +7,7 @@ interface ReservationReport {
   name: string;
   email: string;
   createdAt: string;
-  seatNumber: number;
+  seatNumber: string; // Cambiar a string para el número de asiento
 }
 
 const ReservationReportPage: React.FC = () => {
@@ -19,11 +19,11 @@ const ReservationReportPage: React.FC = () => {
       fetchReservationsByShowtime(showtimeId)
         .then(data => {
           const transformedData = data.map((reservation: any) => ({
-            reservationId: reservation.id,
+            reservationId: reservation.reservationId,
             name: reservation.name,
             email: reservation.email,
             createdAt: reservation.createdAt,
-            seatNumber: reservation.seatId,
+            seatNumber: reservation.seatNumber, // Asegurarse de usar seatNumber
           }));
           setReservations(transformedData);
         })

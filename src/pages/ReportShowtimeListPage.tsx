@@ -17,7 +17,7 @@ const ReportShowtimeListPage: React.FC = () => {
   }, [movieId, theaterId]);
 
   const handleShowtimeClick = (showtimeId: number) => {
-    navigate(`/report/${showtimeId}`);
+    navigate(`/report/by-showtime/${showtimeId}`);
   };
 
   return (

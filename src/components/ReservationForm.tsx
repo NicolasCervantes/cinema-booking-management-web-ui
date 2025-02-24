@@ -3,9 +3,10 @@ import { createReservation } from '../services/api';
 
 interface ReservationFormProps {
   onReserve: (selectedSeats: string[]) => void;
+  showtimeId: number; // Asegúrate de recibir showtimeId como prop
 }
 
-const ReservationForm: React.FC<ReservationFormProps> = ({ onReserve }) => {
+const ReservationForm: React.FC<ReservationFormProps> = ({ onReserve, showtimeId }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
@@ -19,7 +20,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({ onReserve }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createReservation({ name, email, seats: selectedSeats });
+      await createReservation({ name, email, showtimeId, seatIds: selectedSeats.map(Number) }); // Convertir a números si es necesario
       onReserve(selectedSeats);
     } catch (error) {
       console.error('Error creating reservation:', error);

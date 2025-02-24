@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createReservation } from '../services/api';
+import { makeReservation } from '../services/reservationService';
 import { FaChair } from 'react-icons/fa'; // Importar el ícono de silla
 import './ReservationPage.css'; // Importar el archivo CSS
 
@@ -9,7 +9,7 @@ const ReservationPage: React.FC = () => {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const showtimeId = params.get('showtimeId');
-  const seats = params.get('seats')?.split(',') || [];
+  const seats = params.get('seats')?.split(',').map(Number) || [];
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [reservationComplete, setReservationComplete] = useState(false);
@@ -17,7 +17,7 @@ const ReservationPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createReservation({ name, email, seats });
+      await makeReservation({ name, email, showtimeId: Number(showtimeId), seatIds: seats });
       navigate('/confirmation'); // Redirigir a una página de confirmación
     } catch (error) {
       console.error('Error creating reservation:', error);

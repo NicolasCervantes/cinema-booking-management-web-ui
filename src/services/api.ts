@@ -36,7 +36,7 @@ export const fetchSeats = async (showtimeId: string): Promise<Seat[]> => {
   return response.data;
 };
 
-export const createReservation = async (reservation: { name: string; email: string; seats: string[] }) => {
+export const createReservation = async (reservation: { name: string; email: string; showtimeId: number; seatIds: number[] }) => {
   const response = await axios.post(`${API_BASE_URL}/reservations`, reservation);
   return response.data;
 };

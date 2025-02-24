@@ -5,7 +5,7 @@ import { createReservation } from './api';
 
 const API_URL = API_BASE_URL; // Replace with your backend API URL
 
-export const makeReservation = async (reservation: Reservation) => {
+export const makeReservation = async (reservation: { name: string; email: string; showtimeId: number; seatIds: number[] }) => {
   const response = await createReservation(reservation);
   return response;
 };
