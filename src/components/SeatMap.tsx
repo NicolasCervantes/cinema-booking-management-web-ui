@@ -2,18 +2,18 @@ import React from 'react';
 import { Seat } from '../types';
 
 interface SeatMapProps {
-  seatMap: Seat[];
+  seats: Seat[];
   onSeatSelect: (seatId: string) => void;
 }
 
-const SeatMap: React.FC<SeatMapProps> = ({ seatMap, onSeatSelect }) => {
+const SeatMap: React.FC<SeatMapProps> = ({ seats, onSeatSelect }) => {
   return (
     <div className="seat-map">
-      {seatMap.map(seat => (
+      {seats.map(seat => (
         <div
           key={seat.id}
           className={`seat ${seat.isAvailable ? 'available' : 'unavailable'}`}
-          onClick={() => seat.isAvailable && onSeatSelect(seat.id)}
+          onClick={() => seat.isAvailable && onSeatSelect(seat.id.toString())}
         >
           {seat.number}
         </div>

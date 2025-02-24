@@ -1,53 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import SeatMap from '../components/SeatMap';
-import ReservationForm from '../components/ReservationForm';
-import { createReservation, fetchSeatMap } from '../services/api';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { fetchSeats } from '../services/api';
 import { Seat } from '../types';
 
 const SeatSelectionPage: React.FC = () => {
-  const { movieId, theaterId, showTime } = useParams<{ movieId: string; theaterId: string; showTime: string }>();
-  const [seatMap, setSeatMap] = useState<Seat[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { showtimeId } = useParams<{ showtimeId: string }>();
+  const [seats, setSeats] = useState<Seat[]>([]);
+  const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const loadSeatMap = async () => {
-      if (!movieId || !theaterId) {
-        setError('Invalid movie or theater ID');
-        setLoading(false);
-        return;
-      }
-      try {
-        const data = await fetchSeatMap(movieId, theaterId);
-        setSeatMap(data);
-      } catch (err) {
-        setError('Failed to load seat map');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadSeatMap();
-  }, [movieId, theaterId, showTime]);
-
-  const handleReserveSeats = async (selectedSeats: string[]) => {
-    try {
-      await createReservation({ movieId, theaterId, showTime, seats: selectedSeats });
-      alert('Reservation successful!');
-    } catch (err) {
-      alert('Failed to reserve seats');
+    if (showtimeId) {
+      fetchSeats(showtimeId)
+        .then(data => setSeats(data))
+        .catch(error => console.error('Error fetching seats:', error));
     }
+  }, [showtimeId]);
+
+  const handleSeatClick = (seatId: number) => {
+    setSelectedSeats(prevSelectedSeats =>
+      prevSelectedSeats.includes(seatId)
+        ? prevSelectedSeats.filter(id => id !== seatId)
+        : [...prevSelectedSeats, seatId]
+    );
   };
 
-  if (loading) return <div>Loading seat map...</div>;
-  if (error) return <div>{error}</div>;
+  const handleProceedToReservation = () => {
+    navigate(`/reservation/${showtimeId}`, { state: { selectedSeats } });
+  };
 
   return (
     <div>
-      <h1>Select Seats</h1>
-      <SeatMap seatMap={seatMap} onSeatSelect={(seatId) => setSeatMap(seatMap.map(seat => seat.id === seatId ? { ...seat, isAvailable: !seat.isAvailable } : seat))} />
-      <ReservationForm onReserve={handleReserveSeats} />
+      <h2>Select Seats</h2>
+      <div className="seat-map">
+        {seats.map(seat => (
+          <button
+            key={seat.id}
+            className={selectedSeats.includes(seat.id) ? 'selected' : ''}
+            onClick={() => handleSeatClick(seat.id)}
+            disabled={!seat.isAvailable}
+          >
+            {seat.number}
+          </button>
+        ))}
+      </div>
+      <button onClick={handleProceedToReservation}>Proceed to Reservation</button>
     </div>
   );
 };

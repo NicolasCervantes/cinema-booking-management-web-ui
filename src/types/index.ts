@@ -1,26 +1,33 @@
-export interface Seat {
-  id: string;
-  number: string;
-  isAvailable: boolean;
-}
-
 export interface Movie {
-  id: string;
+  id: number;
   title: string;
   description: string;
+  duration: number;
 }
 
 export interface Theater {
-  id: string;
+  id: number;
   name: string;
   location: string;
 }
 
+export interface Showtime {
+  id: number;
+  movieId: number;
+  theaterId: number;
+  startTime: Date;
+}
+
+export interface Seat {
+  id: number;
+  number: string;
+  isAvailable: boolean;
+  theaterId: number;
+}
+
 export interface Reservation {
-  id: string;
+  id: number;
   name: string;
   email: string;
-  movie: string;
-  theater: string;
   seats: string[];
 }

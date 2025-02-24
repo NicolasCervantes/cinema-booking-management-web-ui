@@ -5,10 +5,8 @@ import { Reservation } from '../types';
 const ReservationList: React.FC = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
 
-  const userId = 'someUserId'; // Replace with actual user ID logic
-
   useEffect(() => {
-    fetchReservations(userId)
+    fetchReservations()
       .then(data => setReservations(data))
       .catch(error => console.error('Error fetching reservations:', error));
   }, []);
@@ -19,7 +17,7 @@ const ReservationList: React.FC = () => {
       <ul>
         {reservations.map(reservation => (
           <li key={reservation.id}>
-            {reservation.name} - {reservation.movie} - {reservation.theater} - {reservation.seats.join(', ')}
+            {reservation.name} - {reservation.email} - {reservation.seats.join(', ')}
           </li>
         ))}
       </ul>

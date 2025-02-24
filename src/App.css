@@ -1,0 +1,14 @@
+.seat-map button {
+  margin: 5px;
+  padding: 10px;
+}
+
+.seat-map button.selected {
+  background-color: green;
+  color: white;
+}
+
+.seat-map button:disabled {
+  background-color: red;
+  color: white;
+}

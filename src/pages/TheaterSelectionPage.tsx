@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { fetchTheaters } from '../services/api';
 import { Theater } from '../types';
 
-interface TheaterListProps {
-  onSelect: (theater: Theater) => void;
-}
-
-const TheaterList: React.FC<TheaterListProps> = ({ onSelect }) => {
+const TheaterSelectionPage: React.FC = () => {
+  const { movieId } = useParams<{ movieId: string }>();
   const [theaters, setTheaters] = useState<Theater[]>([]);
 
   useEffect(() => {
@@ -18,11 +15,11 @@ const TheaterList: React.FC<TheaterListProps> = ({ onSelect }) => {
 
   return (
     <div>
-      <h2>Theaters</h2>
+      <h2>Select a Theater</h2>
       <ul>
         {theaters.map(theater => (
-          <li key={theater.id} onClick={() => onSelect(theater)}>
-            <Link to={`/seats/${theater.id}`}>
+          <li key={theater.id}>
+            <Link to={`/showtimes/${movieId}/${theater.id}`}>
               {theater.name}
             </Link>
           </li>
@@ -32,4 +29,4 @@ const TheaterList: React.FC<TheaterListProps> = ({ onSelect }) => {
   );
 };
 
-export default TheaterList;
+export default TheaterSelectionPage;

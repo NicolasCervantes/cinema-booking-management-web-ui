@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchMovies } from '../services/api';
 import { Movie } from '../types';
 
@@ -16,7 +17,11 @@ const MovieList: React.FC = () => {
       <h2>Movies</h2>
       <ul>
         {movies.map(movie => (
-          <li key={movie.id}>{movie.title}</li>
+          <li key={movie.id}>
+            <Link to={`/seats/${movie.id}`}>
+              {movie.title}
+            </Link>
+          </li>
         ))}
       </ul>
     </div>
